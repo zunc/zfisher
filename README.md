@@ -30,10 +30,6 @@ api_register(sz_open);
 ```
 LD_PRELOAD=libzhookd.so application
 ```
-```
-Ex:
-LD_PRELOAD=./libzhookd.so /bin/cat /etc/issue
-```
 
 ## Demo
 * Hooking open API on /bin/cat:
