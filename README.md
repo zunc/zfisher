@@ -3,7 +3,7 @@
 * Easy to hooking application in *nix
 
 ## How to hook ?
-* Function prototype
+* Google function prototype
 * Write some code:
 ```
 char sz_open[] = "open";
@@ -25,7 +25,7 @@ int open(char *filename, int access, int permission) {
 ```
 api_register(sz_open);
 ```
-* Commpile source
+* Compile source
 * Use it by command
 ```
 LD_PRELOAD=libzhookd.so application
@@ -34,7 +34,9 @@ LD_PRELOAD=libzhookd.so application
 Ex:
 LD_PRELOAD=./libzhookd.so /bin/cat /etc/issue
 ```
-* Result
+
+## Demo
+* Hooking open API on /bin/cat:
 ```
 khoai@khoai:bin$ LD_PRELOAD=./libzhookd.so /bin/cat /etc/issue
 HOOK [init_fisher] pid: 21060
