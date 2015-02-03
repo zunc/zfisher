@@ -1,5 +1,7 @@
 # zfisher
 
+[![Join the chat at https://gitter.im/zunc/zfisher](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/zunc/zfisher?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 * Easy to hooking application in *nix
 
 ## How to hook ?
