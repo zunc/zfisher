@@ -1,8 +1,17 @@
 #define _GNU_SOURCE
 #include "zfisher.h"
+#include "pony.h"
 #include <sys/types.h>
 #include <unistd.h>
 //#include <stddef.h>
+
+// profiler implement: fisher stat
+
+enum FStat {
+	FS_OPEN = 0,
+	FS_PREAD = 1,
+	FS_PWRITE = 2
+};
 
 //--- open hook: open
 char sz_open[] = "open";
@@ -30,9 +39,15 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset) {
 	hook_pread _pread = ((struct handler*) api_get(sz_pread))->original;
 	pread_cnt++;
 	pread_total += count;
-	return _pread(fd, buf, count, offset);
+	struct timespec begin, end;
+	gettime(&begin);
+	ssize_t ret = _pread(fd, buf, count, offset);
+	gettime(&end);
+	long span = (end.tv_sec - begin.tv_sec)*1e9 + (end.tv_nsec - begin.tv_nsec);
+	pony_push(FS_PREAD, span);
+	return ret;
 }
-//--- close hook: open
+//--- close hook: pread
 
 //--- open hook: pwrite
 char sz_pwrite[] = "pwrite";
@@ -46,7 +61,7 @@ ssize_t pwrite(int fd, const void *buf, size_t count, off_t offset) {
 	pwrite_total += count;
 	return _pwrite(fd, buf, count, offset);
 }
-//--- close hook: open
+//--- close hook: pwrite
 
 __attribute__((constructor))
 void init() {
@@ -55,6 +70,10 @@ void init() {
 	api_register(sz_pread);
 	api_register(sz_pwrite);
 	hook_apis();
+	// init profiler
+	pony_init();
+	pony_register(FS_PREAD, sz_pread);
+	pony_register(FS_PWRITE, sz_pwrite);
 }
 
 __attribute__((destructor))
@@ -63,4 +82,9 @@ void fini() {
 	log_hook("--- pread: summary");
 	log_hook(" - pread(cnt: %d, total: %ld)", pread_cnt, pread_total);
 	log_hook(" - pwrite(cnt: %d, total: %ld)", pwrite_cnt, pwrite_total);
+	log_hook("--- pony dump");
+	pony_dump();
+
+	// free all
+	// <!> stuff: too lazy to implement #.#
 }

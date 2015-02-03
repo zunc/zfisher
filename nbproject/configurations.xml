@@ -4,6 +4,7 @@
     <logicalFolder name="f2" displayName="inc" projectFiles="true">
       <itemPath>inc/config.h</itemPath>
       <itemPath>inc/list.h</itemPath>
+      <itemPath>inc/pony.h</itemPath>
       <itemPath>inc/util.h</itemPath>
       <itemPath>inc/zfisher.h</itemPath>
     </logicalFolder>
@@ -48,6 +49,8 @@
       </item>
       <item path="inc/list.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="inc/pony.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="inc/util.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/zfisher.h" ex="false" tool="3" flavor2="0">
@@ -84,6 +87,8 @@
       <item path="inc/config.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="inc/pony.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="inc/util.h" ex="false" tool="3" flavor2="0">
       </item>

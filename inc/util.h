@@ -26,5 +26,15 @@
 #define log_info(format, ...)	log(format, GREEN("INFO"), ## __VA_ARGS__)
 #define log_hook(format, ...)	log(format, YELLOW("HOOK"), ## __VA_ARGS__)
 
+#include <time.h>
+
+void gettime(struct timespec* ts) {
+#ifdef CLOCK_MONOTONIC_RAW
+	clock_gettime(CLOCK_MONOTONIC_RAW, ts);
+#else
+	clock_gettime(CLOCK_MONOTONIC, ts);
+#endif
+}
+
 #endif	/* UTIL_H */
 

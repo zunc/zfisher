@@ -42,16 +42,19 @@ Ubuntu 14.04.1 LTS \n \l
 ```
 * Hooking "pread/pwrite" API on KyotoCabinet:
 ```
-khoai@CPU11244:zkc$ LD_PRELOAD=$LIB_HOOK ./bin/zkcd debug
-HOOK [init_fisher] pid: 8311
-HOOK  - original("open") = 0x7f58f235fbd0
-HOOK  - original("pread") = 0x7f58f235fc90
-HOOK  - original("pwrite") = 0x7f58f235fcf0
+khoai@CPU11244:zkc$ LD_PRELOAD=$LIB_HOOK ./bin/zkcd debug get_rand
+HOOK [init_fisher] pid: 17922
+HOOK  - original("open") = 0x7fcea47dfbd0
+HOOK  - original("pread") = 0x7fcea47dfc90
+HOOK  - original("pwrite") = 0x7fcea47dfcf0
 --- kcTest  !
 HOOK open("db/kctest.kch")
 HOOK open("db/kctest.kch.wal")
-HOOK [fini_fisher] pid: 8311
+HOOK [fini_fisher] pid: 17922
 HOOK --- pread: summary
-HOOK  - pread(cnt: 3983, total: 2045157)
-HOOK  - pwrite(cnt: 997, total: 996792)
+HOOK  - pread(cnt: 206, total: 105574)
+HOOK  - pwrite(cnt: 0, total: 0)
+HOOK --- pony dump
+ - pread(206): total(479882 us), avg(2329.52 us)
+ - pwrite(0): total(0 us), avg(0.00 us)
 ```
