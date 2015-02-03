@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=zhook
+PROJECTNAME=zfisher
 
 # Active Configuration
 DEFAULTCONF=Debug

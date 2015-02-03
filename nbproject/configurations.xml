@@ -38,7 +38,7 @@
           <commandLine>-Wall</commandLine>
         </cTool>
         <linkerTool>
-          <output>bin/libzhookd.${CND_DLIB_EXT}</output>
+          <output>bin/libzfisherd.${CND_DLIB_EXT}</output>
           <linkerLibItems>
             <linkerOptionItem>-ldl</linkerOptionItem>
           </linkerLibItems>
@@ -75,7 +75,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <linkerTool>
-          <output>bin/libzhook.${CND_DLIB_EXT}</output>
+          <output>bin/libzfisher.${CND_DLIB_EXT}</output>
           <linkerLibItems>
             <linkerOptionItem>-ldl</linkerOptionItem>
           </linkerLibItems>

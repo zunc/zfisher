@@ -56,11 +56,11 @@ LDLIBSOPTIONS=-ldl
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk bin/libzhook.${CND_DLIB_EXT}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk bin/libzfisher.${CND_DLIB_EXT}
 
-bin/libzhook.${CND_DLIB_EXT}: ${OBJECTFILES}
+bin/libzfisher.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p bin
-	${LINK.c} -o bin/libzhook.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+	${LINK.c} -o bin/libzfisher.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
 
 ${OBJECTDIR}/src/fisher.o: src/fisher.c 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -73,7 +73,7 @@ ${OBJECTDIR}/src/fisher.o: src/fisher.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} bin/libzhook.${CND_DLIB_EXT}
+	${RM} bin/libzfisher.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:

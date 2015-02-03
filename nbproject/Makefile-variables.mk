@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=bin
-CND_ARTIFACT_NAME_Debug=libzhookd.so
-CND_ARTIFACT_PATH_Debug=bin/libzhookd.so
+CND_ARTIFACT_NAME_Debug=libzfisherd.so
+CND_ARTIFACT_PATH_Debug=bin/libzfisherd.so
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=libzhook.so.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/libzhook.so.tar
+CND_PACKAGE_NAME_Debug=libzfisher.so.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/libzfisher.so.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=bin
-CND_ARTIFACT_NAME_Release=libzhook.so
-CND_ARTIFACT_PATH_Release=bin/libzhook.so
+CND_ARTIFACT_NAME_Release=libzfisher.so
+CND_ARTIFACT_PATH_Release=bin/libzfisher.so
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=libzhook.so.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/libzhook.so.tar
+CND_PACKAGE_NAME_Release=libzfisher.so.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/libzfisher.so.tar
 #
 # include compiler specific variables
 #
