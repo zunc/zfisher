@@ -34,6 +34,18 @@ typedef ssize_t(*hook_pread)(int fd, void *buf, size_t count, off_t offset);
 int pread_cnt = 0;
 long pread_total = 0;
 
+struct log_pread {
+	int fd;
+	long count;
+	long offset;
+};
+
+int log_pread_parser(void *log, char *buff, size_t size) {
+	assert(log);
+	struct log_pread* record = log;
+	return snprintf(buff, size, "%d,%ld,%ld", record->fd, record->count, record->offset);
+}
+
 ssize_t pread(int fd, void *buf, size_t count, off_t offset) {
 	//log_hook("open(\"%s\")", filename);
 	hook_pread _pread = ((struct handler*) api_get(sz_pread))->original;
@@ -44,9 +56,19 @@ ssize_t pread(int fd, void *buf, size_t count, off_t offset) {
 	ssize_t ret = _pread(fd, buf, count, offset);
 	gettime(&end);
 	long span = (end.tv_sec - begin.tv_sec)*1e9 + (end.tv_nsec - begin.tv_nsec);
-	pony_push(FS_PREAD, span);
+	struct log_pread* log = malloc(sizeof (struct log_pread));
+	log->fd = fd;
+	log->count = count;
+	log->offset = offset;
+	pony_push(FS_PREAD, span, log);
 	return ret;
 }
+
+struct pony_interface pread_stat = {
+	.profile_id = FS_PREAD,
+	.name = sz_pread,
+	.parser = log_pread_parser
+};
 //--- close hook: pread
 
 //--- open hook: pwrite
@@ -72,8 +94,7 @@ void init() {
 	hook_apis();
 	// init profiler
 	pony_init();
-	pony_register(FS_PREAD, sz_pread);
-	pony_register(FS_PWRITE, sz_pwrite);
+	pony_register(&pread_stat);
 }
 
 __attribute__((destructor))

@@ -13,13 +13,22 @@
 
 struct profile {
 	long time;
+	void *data;
 	struct list list;
+};
+
+typedef int (*log_parser)(void *log, char *buff, size_t size);
+
+struct pony_interface {
+	int profile_id;
+	char *name;
+	log_parser parser;
 };
 
 struct pony_profile {
 	struct list list;
-	char *name;
 	char fused; // used flag
+	struct pony_interface* handler;
 };
 
 #define MAX_PROFILE	64
@@ -31,29 +40,35 @@ void pony_init() {
 	int i;
 	for (i = 0; i < MAX_PROFILE; i++) {
 		pony[i].fused = 0;
+		pony[i].handler = NULL;
 	}
 }
 
-void pony_register(int pid, char *name) {
+void pony_register(struct pony_interface* handler) {
 	// pid : profile id
-	assert(pid < MAX_PROFILE);
+	assert(handler);
+	assert(handler->profile_id < MAX_PROFILE);
+	int pid = handler->profile_id;
 	//LIST_HEAD_INIT
 	pony[pid].list.n = pony[pid].list.p = &pony[pid].list;
-	pony[pid].name = strdup(name);
 	pony[pid].fused = 1;
+	pony[pid].handler = handler;
 }
 
-void pony_push(int pid, long time) {
+void pony_push(int pid, long time, void *data) {
 	struct profile* p = malloc(sizeof (struct profile));
 	p->time = time;
+	p->data = data;
 	assert(pony[pid].fused);
 	LIST_ADDQ(&pony[pid].list, &p->list);
 }
 
 void pony_dump() {
 	int i;
+	char buff[256] = {0};
 	for (i = 0; i < MAX_PROFILE; i++) {
 		struct pony_profile* pn = &pony[i];
+		struct pony_interface* pi = pony[i].handler;
 		if (pn->fused) {
 			struct profile *p;
 			long cnt = 0;
@@ -64,6 +79,13 @@ void pony_dump() {
 #else 
 			char unit[] = "us";
 #endif
+			char log_file[256] = {0};
+			sprintf(log_file, "pn_%s.csv", pi->name);
+			FILE *fle = fopen(log_file, "wt");
+			if (!fle) {
+				printf("fopen(%s) fail", log_file);
+				return;
+			}
 
 			list_for_each_entry(p, &pn->list, list) {
 #if USE_MS
@@ -73,11 +95,14 @@ void pony_dump() {
 #endif
 				total_time += time;
 				cnt++;
-				//printf(" %ld", time);
+				pi->parser(p->data, buff, sizeof (buff));
+				fputs(buff, fle);
+				fprintf(fle, ",%ld\n", time);
 			}
+			fclose(fle);
 			if (cnt) avg = (double) total_time / cnt;
 			printf(" - %s(%ld): total(%ld %s), avg(%.2f %s)\n",
-					pn->name, cnt, total_time, unit, avg, unit);
+					pi->name, cnt, total_time, unit, avg, unit);
 		}
 	}
 }
